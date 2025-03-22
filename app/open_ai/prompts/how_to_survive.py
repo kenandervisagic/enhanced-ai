@@ -4,33 +4,30 @@ The script should be engaging, entertaining, and educational.
 Ensure the content is relevant to current TikTok trends, and make it catchy. 
 Create a lively, engaging tone for the script with a hook at the beginning to keep people watching, provide clear steps or facts, and end with a strong call to action or a fun twist. 
 For background images, generate visuals related to each key part of the script. The images should match the theme, creating a cohesive look throughout the video. 
-Consider the atmosphere: Make it intense and dramatic, visually intriguing and creative. Include an opening image that immediately grabs attention, setting the stage for the survival theme. The images should be hyper-realistic, focusing on fine details, textures, and lighting that make the scene come to life.
+Consider the atmosphere: Make it intense and dramatic, visually intriguing and creative. Include an opening image that immediately grabs attention, setting the stage for the survival theme. 
+The images should be hyper-realistic, focusing on fine details, textures, and lighting that make the scene come to life.
 """
 
 prompt="""
-Generate a script for a TikTok video about {topic}. Pick a survival tactic that could be relevant in this situation.
-Add a one-sentence hook to grab attention before diving into the life hacks, tips, or survival tactics related to the topic.
-The video should be around 40 seconds and include a hook, steps or facts, and an engaging conclusion.
-For each key part of the script, generate a background image that complements the content. 
-The images should be visually cohesive with the theme of survival, creating an intense or dramatic atmosphere. The images should be hyper-realistic, with detailed lighting, textures, and depth. Make sure images don't violate OpenAI's content policy. 
-
-Don't use any special characters like *, "", emojis, etc..
+Generate a TikTok video script in plain text without bold headings or labels like 'Hook:', or 'Conclusion:' about {topic} that lasts approximately 40 seconds and focuses on one relevant survival tactic for this situation. The script should include a one-sentence hook, followed by clear steps to implement the survival tactic with actionable instructions, and then an engaging conclusion. For every key section of the script, immediately follow with a background image description enclosed in square brackets. Ensure that each image description precisely reflects the content and details mentioned in the script immediately before it. The images must be hyper-realistic, emphasizing detailed lighting, textures, and depth, and should match the survival theme with an intense, dramatic atmosphere.
 
 Output format:
 
-[Create an image: Description of the opening shot for this survival situation, related to the topic. Focus on the environment, lighting, textures, and mood. For example, a dark forest with sunlight piercing through the trees, creating deep shadows and highlighting the rough texture of the tree bark.]
+Write a one-sentence hook to grab attention before introducing the survival tactic.
 
-Step 1: Survival tactic relevant to the topic. Explain why this is essential for survival in this scenario.  
-[Create an image: A hyper-realistic shot showing the action being performed in the context of the {topic}. For example, a person building a shelter from branches and leaves in a dense forest, with sunlight filtering through the canopy above, casting soft shadows on the forest floor, and the person's hands gripping rough, weathered wood.]
+[Create an image: Describe an opening shot for this survival situation tied to {topic}. Focus on environment details, lighting, textures, and mood.]
 
-Step 2: Second survival tactic. Give further guidance on how to implement this tactic.  
-[Create an image: A hyper-realistic shot showing the action of the second tactic. For example, a person filling a container with fresh water from a stream, the sunlight sparkling on the surface of the water, with visible details of water droplets on their hands, and the surrounding forest reflecting in the calm water.]
+Step 1: Introduce the survival tactic and explain its importance for surviving {topic}.
+[Create an image: Provide a hyper-realistic scene that directly illustrates this tactic.]
 
-Step 3: Third survival tactic. Share why this step is crucial and how it can help in the situation.  
-[Create an image: A hyper-realistic shot showing the action of the third tactic. For example, a person starting a fire with flint, with sparks flying into the air, the glow of the fire starting to illuminate the darkening forest, casting warm light on the person's focused expression and the dry leaves around them.]
+Step 2: Detail how to implement the tactic effectively.
+[Create an image: Present a hyper-realistic scene that directly corresponds to this step. ]
 
-End with a question, encouraging the viewer to share their thoughts or experiences related to the survival scenario.
-"""
+Step 3: Explain a key aspect of the tactic and its critical role in the scenario.
+[Create an image: Illustrate a hyper-realistic moment that reflects this detail. For example, show a person striking flint to ignite a fire, with sparks vividly flying, warm light reflecting on their focused face, and detailed textures of dry leaves and rocky terrain.]
+
+Conclusion: End with a question inviting viewers to share their thoughts or experiences about surviving {topic}.
+[Create an image: Design a hyper-realistic closing shot that captures the survival theme. For example, show a small, steady fire burning in a forest clearing at dusk, with intricate details on glowing embers and rising smoke, evoking a mood of contemplation and resilience.]"""
 
 #topics to use
 """How to Survive a Bear Attack

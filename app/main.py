@@ -1,7 +1,15 @@
 import logging
 
+from create_srt.create_srt import extract_image_durations, generate_srt_file, transcribe_audio
+from create_srt.srt_to_ass import srt_to_ass
+#
+from create_video.combine_audio_and_video import combine_audio_and_video
+from create_video.combine_srt_and_video import create_video
+from create_video.create_video_from_pictures import create_video_from_images
 from open_ai.api_calls.generate_image import generate_image
-from open_ai.api_calls.generate_story import generate_story, PromptType, extract_image_descriptions
+from open_ai.api_calls.generate_story import generate_story, PromptType
+from text_parsing.parse_text import extract_image_descriptions
+from voiceover.create_voiceover import create_voiceover
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -23,10 +31,36 @@ def main():
         for index, image in enumerate(images):
             logging.info(f"Generating image {index + 1}/{len(images)}: {image}")
             generate_image(image, index)
-            logging.info(f"Image {index + 1} generated successfully.")
+
+        image_folder = '/app/output/images'
+        output_video_path = '/app/output/video/final_video_no_sound.mp4'
+        audio_path = '/app/output/audio/voiceover_output.mp3'
+        create_voiceover(file_path='/app/output/story/story.txt', output_folder='/app/output/audio')
+        timestamps = extract_image_durations('/app/output/audio/voiceover_output.mp3')
+        create_video_from_images(image_folder, output_video_path, timestamps, 60, 1.1, 'in')
+        combine_audio_and_video('/app/output/video/final_video_no_sound.mp4', audio_path,
+                                '/app/output/video/final_video_with_sound.mp4')
+        segments = transcribe_audio(audio_path)
+
+        if not segments:
+            logging.warning(f"No transcription segments generated for {audio_path}")
+            exit(1)
+        srt_path = generate_srt_file(segments, audio_path)
+        if not srt_path:
+            logging.warning(f"Failed to generate SRT for {audio_path}")
+            exit(1)
+
+        ass_path = '/app/output/audio/voiceover_output.mp3.ass'
+        ass_path = srt_to_ass(srt_path, ass_path)
+        if not ass_path:
+            logging.warning(f"Failed to convert SRT to ASS for {audio_path}")
+            exit(1)
+        create_video('/app/output/video/final_video_with_sound.mp4', ass_path,
+                     '/app/output/video/final_video_with_captions.mp4')
 
     except Exception as e:
         logging.error(f"An error occurred: {e}", exc_info=True)
+        exit(1)
 
     logging.info("Story and image generation process finished.")
 

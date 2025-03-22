@@ -12,7 +12,7 @@
    ```bash
    cp .env-example .env
    ```
-   * Replace ```OPENAI_API_KEY``` with you acctual key
+   * Replace ```OPENAI_API_KEY``` with your actual key
 
 
 3. **Start the Docker containers:**

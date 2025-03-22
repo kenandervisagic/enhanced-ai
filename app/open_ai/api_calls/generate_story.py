@@ -46,7 +46,7 @@ def generate_story(topic, prompt_type):
 
     # Send API request
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
@@ -59,7 +59,7 @@ def generate_story(topic, prompt_type):
     print(story)
 
     # Define the directory path where the file will be saved
-    directory = "/app/story"  # Change this to your preferred directory path
+    directory = "/app/output/story"  # Change this to your preferred directory path
 
     # Check if the directory exists, if not, create it
     if not os.path.exists(directory):
@@ -72,10 +72,3 @@ def generate_story(topic, prompt_type):
 
     return story
 
-
-def extract_image_descriptions(text):
-    # Regular expression to find text inside square brackets
-    pattern = r'\[([^\]]+)\]'
-
-    # Find all matches and return them as a list of strings
-    return re.findall(pattern, text)

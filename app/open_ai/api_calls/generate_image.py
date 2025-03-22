@@ -19,15 +19,15 @@ def generate_image(prompt, image_idx):
         # Extract the image URL from the response
         image_url = response.data[0].url
         print(f"Image URL: {image_url}")
-        if not os.path.exists("/app/images"):
-            os.makedirs("/app/images")
+        if not os.path.exists("/app/output/images"):
+            os.makedirs("/app/output/images")
 
             # Get the image from the URL
         response = requests.get(image_url)
 
         if response.status_code == 200:
             # Get the image filename from the URL (e.g., the last part of the URL)
-            image_filename = os.path.join("images", f"generated_image_{image_idx}.png")
+            image_filename = os.path.join("/app/output/images", f"generated_image_{image_idx}.png")
             # Save the image to the 'images' directory
             with open(image_filename, 'wb') as f:
                 f.write(response.content)

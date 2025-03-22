@@ -6,7 +6,7 @@ pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-video-diffusion-img
 pipe.to("cpu")  # If using a GPU
 
 # Load the image you want to base the video on
-image_path = "app/images/generated_image_0.png"
+image_path = "app/output/images/generated_image_0.png"
 image = load_image(image_path)
 generator = torch.manual_seed(42)
 # Generate a video (You can modify parameters like the number of frames)

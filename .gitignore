@@ -18,8 +18,8 @@ dist/
 
 # Package files
 *.jar
-/app/images
-/app/story
+
+
 # Maven
 target/
 # JetBrains IDE
@@ -45,6 +45,13 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+*.srt
+*.mp4
+*.png
+*.txt
+*.ass
+*.mp3
+*.wav
 #Envs
 .env
 .env.*
