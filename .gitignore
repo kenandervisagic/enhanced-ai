@@ -18,7 +18,8 @@ dist/
 
 # Package files
 *.jar
-
+/app/images
+/app/story
 # Maven
 target/
 # JetBrains IDE
