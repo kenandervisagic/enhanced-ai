@@ -4,21 +4,18 @@
 
 ## Setup Instructions
 
-1. **Create a Python virtual environment:**
+1. **Ensure Docker is running:**
+   * Make sure Docker Desktop (or Docker Engine) is installed and running on your machine.
 
-   ```bash
-   python -m venv venv
-   ```
-
-2. **Activate the virtual environment:**
+2. **Start the Docker containers:**
     ```bash
-   .\venv\Scripts\activate
+   docker compose up 
     ```
 
-3. **Install dependencies:**
-    ```bash
-   pip install -r requirements.txt
-    ```
 ---
-## Running the Project
+## PyCharm Setup
 
+1. Set ```app``` as the Project Root:
+   * Open PyCharm.
+   * Right-click the ```app``` directory in the Project Explorer.
+   * Select **Mark Directory as** → **Sources Root**. This will ensure that PyCharm can properly resolve imports and treat the app directory as the project root.
