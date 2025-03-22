@@ -22,7 +22,8 @@ dist/
 # Maven
 target/
 # JetBrains IDE
-.idea/
+.idea/*
+.idea
 # Unit test reports
 TEST*.xml
 

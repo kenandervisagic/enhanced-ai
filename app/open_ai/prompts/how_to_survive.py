@@ -9,10 +9,10 @@ Consider the atmosphere: Make it intense and dramatic, visually intriguing and c
 
 prompt="""
 Generate a script for a TikTok video about {topic}. Pick a survival tactic that could be relevant in this situation.
- Add a one-sentence hook to grab attention before diving into the life hacks, tips, or survival tactics related to the topic.
- The video should be around 40 seconds and include a hook, steps or facts, and an engaging conclusion.
+Add a one-sentence hook to grab attention before diving into the life hacks, tips, or survival tactics related to the topic.
+The video should be around 40 seconds and include a hook, steps or facts, and an engaging conclusion.
 For each key part of the script, generate a background image that complements the content. 
-The images should be visually cohesive with the theme of survival, creating an intense or dramatic atmosphere. The images should be hyper-realistic, with detailed lighting, textures, and depth.
+The images should be visually cohesive with the theme of survival, creating an intense or dramatic atmosphere. The images should be hyper-realistic, with detailed lighting, textures, and depth. Make sure images don't violate OpenAI's content policy. 
 
 Don't use any special characters like *, "", emojis, etc..
 
@@ -29,7 +29,7 @@ Step 2: Second survival tactic. Give further guidance on how to implement this t
 Step 3: Third survival tactic. Share why this step is crucial and how it can help in the situation.  
 [Create an image: A hyper-realistic shot showing the action of the third tactic. For example, a person starting a fire with flint, with sparks flying into the air, the glow of the fire starting to illuminate the darkening forest, casting warm light on the person's focused expression and the dry leaves around them.]
 
-End with a call to action or a question, encouraging the viewer to share their thoughts or experiences related to the survival scenario.
+End with a question, encouraging the viewer to share their thoughts or experiences related to the survival scenario.
 """
 
 #topics to use

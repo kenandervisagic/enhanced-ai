@@ -19,8 +19,8 @@ def generate_image(prompt, image_idx):
         # Extract the image URL from the response
         image_url = response.data[0].url
         print(f"Image URL: {image_url}")
-        if not os.path.exists("images"):
-            os.makedirs("images")
+        if not os.path.exists("/app/images"):
+            os.makedirs("/app/images")
 
             # Get the image from the URL
         response = requests.get(image_url)
