@@ -10,6 +10,14 @@ WORKDIR /app
 
 RUN mkdir /app/output
 
+RUN mkdir /app/output/audio
+
+RUN mkdir /app/output/images
+
+RUN mkdir /app/output/story
+
+RUN mkdir /app/output/video
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt

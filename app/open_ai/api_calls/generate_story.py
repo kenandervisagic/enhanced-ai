@@ -39,6 +39,31 @@ def get_system_prompt(prompt_type):
             return system_prompt_top5
 
 
+def refine_prompt(original_prompt):
+    """
+    Uses ChatGPT to refine the prompt if it violates DALL·E's content policy.
+    """
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant that ensures image generation prompts follow OpenAI's content policy."
+                },
+                {
+                    "role": "user",
+                    "content": f"The following prompt violated DALL·E's content policy: '{original_prompt}'. "
+                               f"Please refine it while maintaining the original intent and ensuring it adheres to the guidelines."
+                }
+            ]
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"Error refining prompt: {e}")
+        return original_prompt  # Fall back to the original prompt if refinement fails
+
+
 def generate_story(topic, prompt_type):
     # Select and fill out prompt based on topic and prompt type enum
     system_prompt = get_system_prompt(prompt_type)

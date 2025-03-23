@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 def main():
     logging.info("Starting story generation process...")
 
-    topic = "How to Survive a Nuclear Fallout"
+    topic = "How to Survive a Bear Attack"
     logging.info(f"Generating story for topic: {topic}")
 
     try:
