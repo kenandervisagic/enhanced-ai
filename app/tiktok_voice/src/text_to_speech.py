@@ -128,7 +128,7 @@ def _split_text(text: str, byte_limit: int = 300) -> List[str]:
     current_byte_length = 0
 
     # Extended punctuation and symbols for chunk splitting
-    punctuation_regex = r'.*?[.,!?:;—…“”‘’\'"「」『』（）【】《》{}<>\[\]‥、。！？\n]|.+'
+    punctuation_regex = r'.*?[.,!?:;—…“”‘’"「」『』（）【】《》{}<>\[\]‥、。！？\n]|.+'
 
     # Split text based on punctuation and symbols to maintain natural pauses
     separated_chunks = re.findall(punctuation_regex, text)
