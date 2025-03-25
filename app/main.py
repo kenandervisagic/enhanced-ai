@@ -17,16 +17,15 @@ from voiceover.create_voiceover import create_voiceover
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-topic_type = os.getenv("TOPIC_TYPE")
+
 topic = os.getenv("TOPIC")
 
 
-def create_ai_video():
+def create_ai_video(video_type):
     logging.info(f"Generating story for topic: {topic}")
 
     try:
-        response_gpt = generate_story(topic, topic_type)
-
+        response_gpt = generate_story(topic, video_type)
         logging.info("Story generation completed successfully.")
 
         images = extract_image_descriptions(response_gpt)
@@ -40,9 +39,9 @@ def create_ai_video():
         output_video_path = '/app/output/video/final_video_no_sound.mp4'
         audio_path = '/app/output/audio/voiceover_output.mp3'
         create_voiceover(file_path='/app/output/story/story.txt', output_folder='/app/output/audio')
-        if topic_type == PromptType.TOP_3:
+        if video_type == PromptType.TOP_3:
             timestamps = extract_image_durations_top_3('/app/output/audio/voiceover_output.mp3')
-        elif topic_type == PromptType.HOW_TO_SURVIVE:
+        elif video_type == PromptType.HOW_TO_SURVIVE:
             timestamps = extract_image_durations_how_to_survive('/app/output/audio/voiceover_output.mp3')
         else:
             exit(1)
@@ -75,13 +74,26 @@ def create_ai_video():
 
 
 if __name__ == '__main__':
-    if topic_type is None:
-        logging.error("env variable TOPIC_TYPE must be set")
+    topic_type = os.getenv("TOPIC_TYPE")
+    match topic_type:
+        case "1":
+            video_type = PromptType.HOW_TO_SURVIVE
+        case "2":
+            video_type = PromptType.TOP_3
+        case "3":
+            video_type = PromptType.QUOTES
+        case "4":
+            video_type = PromptType.LIFEHACKS
+        case _:
+            video_type = None
+
+    if video_type is None:
+        logging.error("env variable TOPIC_TYPE must be set or it is invalid")
         exit(1)
-    if topic_type != PromptType.QUOTES and topic is None: #quotes don't require topics
+    if video_type != PromptType.QUOTES and topic is None: #quotes don't require topics
         logging.error("env variable TOPIC must be set")
         exit(1)
-    if topic_type == PromptType.QUOTES:
+    if video_type == PromptType.QUOTES:
         create_quotes_images()
     else:
-        create_ai_video()
+        create_ai_video(video_type)
