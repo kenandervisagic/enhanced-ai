@@ -2,25 +2,9 @@ import os
 import openai
 import requests
 
+from open_ai.api_calls.generate_story import refine_prompt
+
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-
-def refine_prompt(original_prompt):
-    """
-    Uses ChatGPT to refine the prompt if it violates DALL·E's content policy.
-    """
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4-turbo",
-            messages=[
-                {"role": "system", "content": "Ensure the prompt follows OpenAI's content policy."},
-                {"role": "user", "content": f"Refine this prompt while keeping its intent: {original_prompt}"}
-            ]
-        )
-        return response.choices[0].message.content.strip()
-    except Exception as e:
-        print(f"Error refining prompt: {e}")
-        return original_prompt  # Fallback to the original prompt
 
 
 def generate_image(prompt, image_idx):

@@ -17,7 +17,7 @@ def combine_audio_and_video(video_path, audio_path, output_path):
         (
             ffmpeg
             .output(video, audio, output_path, vcodec='libx264', acodec='aac', strict='experimental')
-            .run(quiet=True)
+            .run(quiet=False, overwrite_output=True)
         )
         print(f"Video with audio saved at: {output_path}")
     except Exception as e:

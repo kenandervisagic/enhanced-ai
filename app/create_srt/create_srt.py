@@ -61,7 +61,7 @@ def generate_srt_file(segments, audio_path):
         return None
 
 
-def extract_image_durations(mp3_path):
+def extract_image_durations_how_to_survive(mp3_path):
     # Load Whisper model (using 'small' for efficiency, can switch to 'medium' or 'large')
     model = whisper.load_model("small")
 
@@ -114,3 +114,57 @@ def extract_image_durations(mp3_path):
     return image_durations
 
 
+def extract_image_durations_top_3(mp3_path):
+    # Load Whisper model (using 'small' for efficiency, can switch to 'medium' or 'large')
+    model = whisper.load_model("small")
+
+    # Transcribe audio
+    result = model.transcribe(mp3_path)
+
+    # Print transcription result for debugging
+    print("Transcription result:")
+    for segment in result["segments"]:
+        start_time = timedelta(seconds=segment["start"])
+        end_time = timedelta(seconds=segment["end"])
+        text = segment["text"]
+        print(f"Start: {start_time}, End: {end_time}, Text: {text}")
+
+    # Get the total duration of the audio
+    audio_end = timedelta(seconds=result["segments"][-1]["end"])
+
+    # Find timestamps dynamically based on "First", "Second", "Third"
+    step_starts = []
+    for segment in result["segments"]:
+        start_time = timedelta(seconds=segment["start"])
+        text = segment["text"].strip().lower()
+        if any(keyword in text for keyword in ["first", "second", "third"]):
+            step_starts.append(start_time)
+
+    # Ensure we have at least 3 steps
+    while len(step_starts) < 3:
+        step_starts.append(audio_end)  # Fill missing timestamps with end time
+
+    step_starts = step_starts[:3]  # Limit to First, Second, Third
+
+    # Determine the start of the final image (last segment)
+    if len(result["segments"]) < 1:
+        raise ValueError("Audio must have at least 1 segment.")
+    final_image_start = timedelta(seconds=result["segments"][-1]["start"])  # Start of the last segment
+
+    # Define timestamps for 5 images
+    timestamps = [
+        timedelta(seconds=0),  # Start of intro
+        step_starts[0],  # Start of First (end of intro)
+        step_starts[1],  # Start of Second
+        step_starts[2],  # Start of Third
+        final_image_start,  # End of Third, start of final image (last segment)
+        audio_end  # End of audio
+    ]
+
+    # Calculate durations for 5 images
+    image_durations = []
+    for i in range(len(timestamps) - 1):
+        duration = (timestamps[i + 1] - timestamps[i]).total_seconds()
+        image_durations.append(duration)
+    print(image_durations)
+    return image_durations

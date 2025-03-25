@@ -7,16 +7,17 @@ import openai
 from open_ai.prompts.how_to_survive import prompt as prompt_how_to_survive
 from open_ai.prompts.how_to_survive import system_prompt as system_prompt_how_to_survive
 from open_ai.prompts.life_hacks import prompt as life_hacks_prompt, system_prompt as system_prompt_life_hacks
-from open_ai.prompts.top5 import prompt as prompt_top5
-from open_ai.prompts.top5 import system_prompt as system_prompt_top5
+from open_ai.prompts.top3 import prompt as prompt_top3
+from open_ai.prompts.top3 import system_prompt as system_prompt_top3
 
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 class PromptType(Enum):
-    LIFEHACKS = 1
-    HOW_TO_SURVIVE = 2
-    TOP_5 = 3
+    HOW_TO_SURVIVE = 1
+    TOP_3 = 2
+    QUOTES = 3
+    LIFEHACKS = 4
 
 
 def get_user_prompt(topic, prompt_type):
@@ -25,8 +26,8 @@ def get_user_prompt(topic, prompt_type):
             return life_hacks_prompt.format(topic=topic)
         case PromptType.HOW_TO_SURVIVE:
             return prompt_how_to_survive.format(topic=topic)
-        case PromptType.TOP_5:
-            return prompt_top5.format(topic=topic)
+        case PromptType.TOP_3:
+            return prompt_top3.format(topic=topic)
 
 
 def get_system_prompt(prompt_type):
@@ -35,8 +36,8 @@ def get_system_prompt(prompt_type):
             return system_prompt_life_hacks
         case PromptType.HOW_TO_SURVIVE:
             return system_prompt_how_to_survive
-        case PromptType.TOP_5:
-            return system_prompt_top5
+        case PromptType.TOP_3:
+            return system_prompt_top3
 
 
 def refine_prompt(original_prompt):
@@ -61,7 +62,7 @@ def refine_prompt(original_prompt):
         return response.choices[0].message.content.strip()
     except Exception as e:
         print(f"Error refining prompt: {e}")
-        return original_prompt  # Fall back to the original prompt if refinement fails
+        return original_prompt
 
 
 def generate_story(topic, prompt_type):
