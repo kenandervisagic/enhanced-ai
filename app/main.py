@@ -17,9 +17,7 @@ from voiceover.create_voiceover import create_voiceover
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-
 topic = os.getenv("TOPIC")
-
 
 def create_ai_video(video_type):
     logging.info(f"Generating story for topic: {topic}")

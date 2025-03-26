@@ -1,5 +1,5 @@
+import json
 import os
-import random
 import re
 from pathlib import Path
 
@@ -36,6 +36,11 @@ def get_text_position(image_name, image_width, image_height):
         5: {"x": image_width // 1.8, "y": image_height // 4},
         6: {"x": image_width // 1.7, "y": image_height // 2.2},
         7: {"x": image_width // 1.93, "y": image_height // 2.4},
+        8: {"x": image_width // 1.97, "y": image_height // 2.6},
+        9: {"x": image_width // 2.05, "y": image_height // 3.3},
+        10: {"x": image_width // 1.95, "y": image_height // 3.3},
+        11: {"x": image_width // 1.95, "y": image_height // 3.3},
+
     }
 
     # Default case if index is out of range
@@ -47,15 +52,17 @@ def get_text_font_size(image_name):
 
     # Extract index number from file name (e.g., "empty_page_3.jpg" → 3)
     match = re.search(r"empty_page_(\d+)", image_name)
-    index = int(match.group(1)) if match else 1  # Default to 1 if no number found
+    index = int(match.group(1)) if match else 5  # Default to 1 if no number found
 
     # Define cases with different font sizes
     cases = {
-        6: 25,
+        5: 18,
+        6: 20,
     }
 
     # Default case if index is out of range
-    return cases.get(index, 20)  # Return 24 as default
+    return cases.get(index, 20)  # Return 20 as default
+
 
 def add_text_to_page(image_path, text, output_path):
     """Adds typewriter-style poetic text onto an existing book page image with varied positions."""
@@ -66,7 +73,7 @@ def add_text_to_page(image_path, text, output_path):
     draw = ImageDraw.Draw(image)
     font_size = get_text_font_size(image_name)
     try:
-        font = ImageFont.truetype("/app/assets/cour.ttf", font_size)  # Typewriter font
+        font = ImageFont.truetype("/app/assets/fonts/cour.ttf", font_size)  # Typewriter font
     except:
         font = ImageFont.load_default()
 
@@ -99,7 +106,7 @@ def add_text_to_image(image_path, text, output_path):
     draw = ImageDraw.Draw(image)
 
     try:
-        font = ImageFont.truetype("/app/assets/proximanova_regular.ttf", 30)  # Typewriter font
+        font = ImageFont.truetype("/app/assets/fonts/proximanova_regular.ttf", 33)  # Typewriter font
     except:
         font = ImageFont.load_default()
 
@@ -118,7 +125,8 @@ def add_text_to_image(image_path, text, output_path):
         jitter_x = np.random.randint(-1, 2)
         jitter_y = np.random.randint(-1, 2)
         draw.text((line_x + jitter_x, text_y + jitter_y),
-                  line, font=font, fill=(255, 255, 255), stroke_width=0.3, stroke_fill=(255, 255, 255))  # You can change the color here (dark gray)
+                  line, font=font, fill=(255, 255, 255), stroke_width=0.3,
+                  stroke_fill=(255, 255, 255))  # You can change the color here (dark gray)
         text_y += line_spacing
 
     # Save and show the final image
@@ -127,117 +135,52 @@ def add_text_to_image(image_path, text, output_path):
 
 
 def create_quotes_images():
-    quotes_data = [
-        {
-            "question": "missing you",
-            "quote": "i wish you could see how empty my room feels without you in it."
-        },
-        {
-            "question": "what if",
-            "quote": "sometimes i wonder if you ever think about me like i think about you."
-        },
-        {
-            "question": "alone",
-            "quote": "i'm so tired of feeling like half a person since you left."
-        },
-        {
-            "question": "memories hurt",
-            "quote": "every song reminds me of you. every single one."
-        },
-        {
-            "question": "i'm sorry",
-            "quote": "i know i wasn't enough. i know i never will be."
-        },
-        {
-            "question": "nights are hard",
-            "quote": "3 am and i'm thinking about all the things i should have done differently."
-        },
-        {
-            "question": "texts i'll never send",
-            "quote": "i still check my phone hoping you'll message me. but you won't."
-        },
-        {
-            "question": "letting go",
-            "quote": "trying to forget you is like trying to breathe underwater."
-        },
-        {
-            "question": "truth hurts",
-            "quote": "i loved you more than you ever loved me. and that hurts."
-        },
-        {
-            "question": "broken",
-            "quote": "some days i'm okay. most days i'm not."
-        },
-        {
-            "question": "phantom contact",
-            "quote": "i keep my phone charged, hoping you'll text. knowing you won't."
-        },
-        {
-            "question": "replaying",
-            "quote": "i replay our last conversation in my head. over and over. looking for something i missed."
-        },
-        {
-            "question": "spaces",
-            "quote": "your side of the bed is still empty. i haven't moved your pillow."
-        },
-        {
-            "question": "social media ghosts",
-            "quote": "i scroll through your photos. i know i shouldn't. but i can't stop."
-        },
-        {
-            "question": "worthless",
-            "quote": "i keep wondering what was wrong with me. why wasn't i enough?"
-        },
-        {
-            "question": "weak moments",
-            "quote": "sometimes i want to call you. just to hear your voice. but i know better."
-        },
-        {
-            "question": "memories hurt",
-            "quote": "everything reminds me of you. the coffee mug. that jacket. this song."
-        },
-        {
-            "question": "moving on",
-            "quote": "trying to forget you feels like trying to hold water in my hands."
-        },
-        {
-            "question": "regrets",
-            "quote": "i wish i had said more. or maybe said less."
-        },
-        {
-            "question": "alone",
-            "quote": "some nights are harder than others. tonight is one of those nights."
-        }
-    ]
+    # Load quotes from JSON file
+    with open("/app/assets/quotes.json", "r", encoding="utf-8") as file:
+        quotes_data = json.load(file)
 
     # Folder where images are stored
-    image_folder = "/app/assets/"
+    image_folder = "/app/assets/quotes_images"
     output_folder = "/app/output/quotes"
     Path(output_folder).mkdir(exist_ok=True)
 
     # List of available image filenames
-    question_images = ['image_1.png', 'image_6.jpg', 'image_7.jpg', 'image_8.jpg', 'image_9.jpg', 'image_10.jpg', "image_13.jpg", "image_14.jpg", "image_15.jpg", "image_16.jpg", "image_17.jpg", "image_18.jpg"]
-    quote_images = ['empty_page_1.jpg', 'empty_page_2.jpg', 'empty_page_3.jpg', 'empty_page_5.jpg', 'empty_page_6.jpg', 'empty_page_8.jpg']
+    tagline_images = ['image_1.png', 'image_2.jpg', 'image_3.jpg', 'image_4.jpg', 'image_5.jpg', 'image_6.jpg',
+                      'image_7.jpg', 'image_8.jpg', 'image_9.jpg', 'image_10.jpg', 'image_11.jpg',
+                      "image_13.jpg", "image_14.jpg", "image_15.jpg", "image_16.jpg", "image_17.jpg", "image_18.jpg"]
+    quote_images = ['empty_page_1.jpg', 'empty_page_2.jpg', 'empty_page_3.jpg', 'empty_page_4.jpg', 'empty_page_5.jpg',
+                    'empty_page_6.jpg', 'empty_page_7.jpg', 'empty_page_8.jpg', 'empty_page_9.jpg', 'empty_page_10.jpg',
+                    'empty_page_11.jpg']
+
+    # Initialize indices for looping through images
+    tagline_index = 0
+    quote_index = 0
+    tagline_count = len(tagline_images)
+    quote_count = len(quote_images)
 
     # Loop through the quotes and create images
     for i, data in enumerate(quotes_data):
-        question = data['question']
+        tagline = data['tagline']
         quote = data['quote']
 
-        # Select random images for question and quote
-        question_image = random.choice(question_images)
-        quote_image = random.choice(quote_images)
+        # Select images sequentially, looping back when reaching the end
+        tagline_image = tagline_images[tagline_index]
+        quote_image = quote_images[quote_index]
 
-        # Prepare paths for question and quote image files
-        question_image_path = os.path.join(image_folder, question_image)
+        # Update indices and loop back if necessary
+        tagline_index = (tagline_index + 1) % tagline_count
+        quote_index = (quote_index + 1) % quote_count
+
+        # Prepare paths for tagline and quote image files
+        tagline_image_path = os.path.join(image_folder, tagline_image)
         quote_image_path = os.path.join(image_folder, quote_image)
 
         # Paths where the generated images will be saved
-        first_page_output_path = f"/app/output/quotes/quote_first_page_{i + 1}.png"
-        second_page_output_path = f"/app/output/quotes/quote_second_page_{i + 1}.png"
+        first_page_output_path = f"{output_folder}/quote_first_page_{i + 1}.png"
+        second_page_output_path = f"{output_folder}/quote_second_page_{i + 1}.png"
 
         # Add text to pages using the previously defined add_text_to_page function
-        add_text_to_image(question_image_path, "\"{}\"".format(question), first_page_output_path)
+        add_text_to_image(tagline_image_path, f"\"{tagline}\"", first_page_output_path)
         add_text_to_page(quote_image_path, quote, second_page_output_path)
 
     print("Quote images generated successfully!")
