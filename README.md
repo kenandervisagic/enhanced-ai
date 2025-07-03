@@ -1,4 +1,19 @@
-# Enhanced AI
+# 🧠 AI Content Generator for TikTok & YouTube Shorts
+
+This is a simple AI-powered project designed to automatically generate engaging content for short-form platforms like **TikTok**, **YouTube Shorts**, and **Instagram Reels**.
+
+The system uses AI to produce bite-sized scripts and text-based content ideal for visual storytelling, voiceovers, or automated video creation.
+
+## ✨ What It Can Generate
+
+1. **How to Survive** – survival tips or guides for extreme or everyday situations  
+2. **Top 3** – quick lists with entertaining or informative rankings  
+3. **Quotes** – AI-curated inspirational, thought-provoking, or emotional quotes  
+4. **Lifehacks** – *(coming soon)* clever tricks to make life easier  
+
+## 🚀 Purpose
+
+The goal is to automate the creative process behind short-form video content — helping creators save time and maintain consistency while still producing engaging, valuable material.
 
 ---
 
